@@ -1,4 +1,15 @@
+/**
+ * Create a Grid for positioning
+ */
 export default class Grid {
+  /**
+   * @param {Object} config
+   * @param config.scene {Phaser.Scene}
+   * @param config.rows {number} number of rows
+   * @param config.cols {number} number of columns
+   * @param config.height {number}
+   * @param config.width {number}
+   */
   constructor (config) {
     if (!config.scene) {
       console.error('Missing scene!')
