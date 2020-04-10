@@ -29,7 +29,6 @@ export default class SceneMain extends Phaser.Scene {
     this.load.image('pcar2', pcar2)
     this.load.image('cone', cone)
     this.load.image('barrier', barrier)
-    this.load.image('button', button)
   }
 
   create() {
@@ -46,29 +45,10 @@ export default class SceneMain extends Phaser.Scene {
     this.scoreBox = new ScoreBox({ scene: this, emitter: this.emitter, model: this.model })
     this.scoreBox.x = this.game.config.width - 100
     this.scoreBox.y = 50
-
-    // Button
-    const flatButton = new FlatButton({
-      scene: this,
-      emitter: this.emitter,
-      key: 'button',
-      text: 'Click me',
-      x: 100,
-      y: 50,
-      event: 'button_pressed',
-      args: ['test1', 'test2'],
-      textConfig: { color: 'red', fontSize: 20 }
-    })
-
-    this.emitter.on('button_pressed', this.buttonPressed, this)
   }
 
   update() {
     this.road.moveLines()
     this.road.moveObject()
-  }
-
-  buttonPressed (params) {
-    console.log('button pressed', params)
   }
 }
