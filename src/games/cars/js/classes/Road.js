@@ -33,8 +33,6 @@ export default class Road extends Phaser.GameObjects.Container {
     this.back.on('pointerdown', this.changeLanes.bind(this))
 
     this.addObjects()
-
-    this.hasCollided = false
   }
 
   addObjects () {
@@ -62,7 +60,8 @@ export default class Road extends Phaser.GameObjects.Container {
     this.object.y += this.vSpace / this.object.speed
     if (Collission.checkCollide(this.car, this.object)) {
       this.car.alpha = .5
-      this.hasCollided = true
+      this.emitter.emit(SET_SCORE, 0)
+      this.scene.scene.start('SceneOver')
     } else {
       this.car.alpha = 1
     }
@@ -70,14 +69,7 @@ export default class Road extends Phaser.GameObjects.Container {
     if (this.object.y > this.game.config.height) {
       this.object.destroy()
       this.addObjects()
-      if (!this.hasCollided) {
-        this.emitter.emit(ADD_POINTS, 10)
-      } else {
-        this.emitter.emit(SET_SCORE, 0)
-        console.log('scene', this.scene)
-        this.scene.scene.start('SceneOver')
-      }
-      this.hasCollided = false
+      this.emitter.emit(ADD_POINTS, 10)
     }
   }
 
