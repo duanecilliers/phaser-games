@@ -7,7 +7,7 @@ export default class FlatButton extends Phaser.GameObjects.Container {
    * @param {object} config
    * @param config.scene {Phaser.Scene} Phaser scene
    * @param config.emitter {Phaser.Events.EventEmitter} Phaser scene
-   * @param config.key {string} Button key
+   * @param config.key {string} Button image key
    * @param config.text {string} Button text
    * @param config.x {number} Button x position
    * @param config.y {number} Button y position
