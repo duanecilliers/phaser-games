@@ -1,4 +1,5 @@
 import Phaser from 'phaser'
+import isMobile from '../../utils/isMobile'
 
 export default class FlatButton extends Phaser.GameObjects.Container {
   /**
@@ -63,11 +64,24 @@ export default class FlatButton extends Phaser.GameObjects.Container {
       this.bg.on('pointerdown', this.pressed, this)
     }
 
+    if (!isMobile()) {
+      this.bg.on('pointerover', this.over, this)
+      this.bg.on('pointerout', this.out, this)
+    }
+
     this.scene.add.existing(this)
   }
 
   pressed () {
     const { emitter, event, args } = this.config
     emitter.emit(event, args)
+  }
+
+  over () {
+    this.y -= 2
+  }
+
+  out () {
+    this.y += 2
   }
 }
