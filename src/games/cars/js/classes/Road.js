@@ -4,6 +4,10 @@ import Collission from '../../../../utils/Collission'
 import { SCORE_UPDATED, ADD_POINTS, SET_SCORE } from '../constants'
 
 export default class Road extends Phaser.GameObjects.Container {
+  /**
+   * @param {Object} config
+   * @param config.scene {Phaser.Scene}
+   */
   constructor (config) {
     const { scene, game, emitter } = config
     super(scene)
@@ -70,6 +74,8 @@ export default class Road extends Phaser.GameObjects.Container {
         this.emitter.emit(ADD_POINTS, 10)
       } else {
         this.emitter.emit(SET_SCORE, 0)
+        console.log('scene', this.scene)
+        this.scene.scene.start('SceneOver')
       }
       this.hasCollided = false
     }
