@@ -1,5 +1,5 @@
 # Phaser Games
-Games made while learning Phaser
+Games made while learning [Phaser3](https://phaser.io/phaser3)
 
 ## Install
 ```
