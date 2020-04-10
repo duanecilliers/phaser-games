@@ -20,7 +20,7 @@ const config = {
         use: ['style-loader', 'css-loader']
       },
       {
-        test: /\.(png|jpe?g|gif)$/i,
+        test: /\.(png|jpe?g|gif|mp3|ogg)$/i,
         use: [
           {
             loader: 'file-loader',
