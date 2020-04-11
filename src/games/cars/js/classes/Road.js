@@ -1,7 +1,7 @@
 import Phaser from 'phaser'
 import Align from '../../../../utils/Align'
 import Collission from '../../../../utils/Collission'
-import { SCORE_UPDATED, ADD_POINTS, SET_SCORE, MUSIC_CHANGED } from '../constants'
+import { SCORE_UPDATED, ADD_POINTS, SET_SCORE, MUSIC_CHANGED, PLAY_SOUND } from '../constants'
 
 export default class Road extends Phaser.GameObjects.Container {
   /**
@@ -59,13 +59,19 @@ export default class Road extends Phaser.GameObjects.Container {
     this.add(this.object)
   }
 
+  handleGameOver () {
+    this.emitter.emit(SET_SCORE, 0)
+    this.emitter.emit(MUSIC_CHANGED)
+    this.scene.scene.start('SceneOver')
+  }
+
   moveObject () {
     this.object.y += this.vSpace / this.object.speed
     if (Collission.checkCollide(this.car, this.object)) {
       this.car.alpha = .5
-      this.emitter.emit(SET_SCORE, 0)
-      this.emitter.emit(MUSIC_CHANGED)
-      this.scene.scene.start('SceneOver')
+      this.emitter.emit(PLAY_SOUND, 'boomSound', { volume: 0.3 })
+      this.scene.tweens.add({ targets: this.car, duration: 1000, y: this.game.config.height, angle: -270 })
+      this.scene.time.addEvent({ delay: 2000, callback: this.handleGameOver, callbackScope: this, loop: false })
     } else {
       this.car.alpha = 1
     }
@@ -101,6 +107,7 @@ export default class Road extends Phaser.GameObjects.Container {
   }
 
   changeLanes () {
+    this.emitter.emit(PLAY_SOUND, 'whooshSound')
     if (this.car.x > 0) {
       this.car.x =- this.displayWidth / 4
     } else {
