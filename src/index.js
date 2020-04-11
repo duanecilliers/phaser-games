@@ -6,7 +6,7 @@ import './index.css'
 
 const main = async () => {
   // createUtilsTest()
-  // createStarterGame()
+  // // createStarterGame()
   // createFpsGame()
   createCarsGame()
 }

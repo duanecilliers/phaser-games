@@ -7,15 +7,14 @@ export default class Road extends Phaser.GameObjects.Container {
   /**
    * @param {Object} config
    * @param config.scene {Phaser.Scene} Scene
-   * @param config.game {Phaser.Scene.game} game - @todo remove this, allready in scene?
    * @param config.emitter {Phaser.Events.EventEmitter} Event Emitter
    * @param config.model {Model}
    */
   constructor (config) {
-    const { scene, game, emitter, model } = config
+    const { scene, emitter, model } = config
     super(scene)
     this.scene = scene
-    this.game = game
+    this.game = scene.game
     this.emitter = emitter
     this.model = model
 
@@ -23,15 +22,15 @@ export default class Road extends Phaser.GameObjects.Container {
     this.add(this.back)
     this.scene.add.existing(this)
 
-    Align.scaleToGameWidth(this.back, 0.5, game.config)
+    Align.scaleToGameWidth(this.back, 0.5, this.game.config)
 
-    this.setSize(this.back.displayWidth, game.config.height)
+    this.setSize(this.back.displayWidth, this.game.config.height)
 
     this.lineGroup = this.scene.add.group()
     this.count = 0
 
-    this.car = this.scene.add.sprite(this.displayWidth / 4, game.config.height * .9, 'cars')
-    Align.scaleToGameWidth(this.car, .1, game.config)
+    this.car = this.scene.add.sprite(this.displayWidth / 4, this.game.config.height * .9, 'cars')
+    Align.scaleToGameWidth(this.car, .1, this.game.config)
     this.add(this.car)
     this.back.setInteractive()
     this.back.on('pointerdown', this.changeLanes.bind(this))

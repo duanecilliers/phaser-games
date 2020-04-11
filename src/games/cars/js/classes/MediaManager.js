@@ -1,4 +1,4 @@
-import { PLAY_SOUND, MUSIC_CHANGED } from "../constants"
+import { PLAY_SOUND, MUSIC_CHANGED, SOUND_CHANGED } from "../constants"
 
 export default class MediaManager {
   /**
@@ -12,6 +12,7 @@ export default class MediaManager {
     this.emitter = config.emitter
     this.model = config.model
     this.emitter.on(PLAY_SOUND, this.playSound, this)
+    this.emitter.on(SOUND_CHANGED, this.soundChanged, this)
     this.emitter.on(MUSIC_CHANGED, this.musicChanged, this)
   }
 
@@ -34,6 +35,16 @@ export default class MediaManager {
   setBackgroundMusic (key, config) {
     if (this.model.musicOn) {
       this.background = this.playSound(key, config)
+    }
+  }
+
+  soundChanged () {
+    if (this.background) {
+      if (this.model.soundOn) {
+        this.background.play()
+      } else {
+        this.background.stop()
+      }
     }
   }
 
