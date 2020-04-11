@@ -1,0 +1,24 @@
+{
+  "importPhaser": {
+    "prefix": [
+      "imp"
+    ],
+    "body": [
+      "import Phaser from 'phaser'",
+    ],
+    "description": "Import phaser",
+    "scope": "javascript"
+  },
+  "configJsDoc": {
+    "prefix": [
+      "configdoc"
+    ],
+    "body": [
+      "/**",
+      " * @param {object} config",
+      " * @param config.scene {Phaser.Scene} Phaser scene",
+      " * @param config.emitter {Phaser.Events.EventEmitter} Phaser scene",
+      " */"
+    ]
+  }
+}
