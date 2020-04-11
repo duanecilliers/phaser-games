@@ -1,4 +1,5 @@
 import Phase from 'phaser'
+import ProgressBar from '../../../../ui/ProgressBar/ProgressBar'
 import road from '../../assets/images/road.jpg'
 import carsSprite from '../../assets/images/cars.png'
 import line from '../../assets/images/line.png'
@@ -24,11 +25,12 @@ export default class SceneLoad extends Phaser.Scene {
 
   preload() {
     const { game } = this
+    this.progressBar = new ProgressBar({ scene: this, x: 240, y: 320 })
     this.progressText = this.add.text(game.config.width / 2, game.config.height / 2, '0%', {
       color: '#ffffff', fontSize: game.config.width / 20
     })
     this.progressText.setOrigin(0.5, 0.5)
-    this.load.on('progress', progress => this.progressText.text = `${Math.floor(progress * 100)}%`)
+    this.load.on('progress', this.onProgress, this)
 
     this.load.image('road', road)
     this.load.spritesheet('cars', carsSprite, { frameWidth: 60, frameHeight: 126 })
@@ -43,6 +45,11 @@ export default class SceneLoad extends Phaser.Scene {
     this.load.audio('backgroundSound', [backgroundSoundMp3, backgroundSoundOgg])
     this.load.audio('whooshSound', [whooshSoundMp3, whooshSoundOgg])
     this.load.audio('boomSound', [boomSoundMp3, boomSoundOgg])
+  }
+
+  onProgress (progress) {
+    this.progressText.text = `${Math.floor(progress * 100)}%`
+    this.progressBar.setPercentage(progress)
   }
 
   create() {
