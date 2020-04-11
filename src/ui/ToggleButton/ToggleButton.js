@@ -31,22 +31,22 @@ export default class ToggleButton extends Phaser.GameObjects.Container {
     this.scene = scene
     this.emitter = emitter
 
-    this.bg = this.scene.add.image(0, 0, bgKey)
-    this.onIcon = this.scene.add.image(0, 0, onIcon)
-    this.offIcon = this.scene.add.image(0, 0, offIcon)
+    this.bg = scene.add.image(0, 0, bgKey)
+    this.onIcon = scene.add.image(0, 0, onIcon)
+    this.offIcon = scene.add.image(0, 0, offIcon)
 
     /**
      * @todo remove config as param
      */
-    Align.scaleToGameWidth(this.bg, 0.1, this.scene.game.config)
-    Align.scaleToGameWidth(this.onIcon, 0.5, this.scene.game.config)
-    Align.scaleToGameWidth(this.offIcon, 0.1, this.scene.game.config)
+    Align.scaleToGameWidth(this.bg, 0.1, scene.game.config)
+    Align.scaleToGameWidth(this.onIcon, 0.05, scene.game.config)
+    Align.scaleToGameWidth(this.offIcon, 0.05, scene.game.config)
 
     this.add(this.bg)
     this.add(this.onIcon)
     this.add(this.offIcon)
 
-    this.value = value || true
+    this.value = value || false
 
     if (event) {
       this.event = event
@@ -61,9 +61,10 @@ export default class ToggleButton extends Phaser.GameObjects.Container {
     }
 
     this.bg.setInteractive()
-    this.bg.on('pointerdown', this.toggle, this)
+    this.bg.on('pointerdown', this.toggle.bind(this))
+    this.setIcons()
 
-    this.scene.add.existing(this)
+    scene.add.existing(this)
   }
 
   toggle () {
@@ -71,7 +72,6 @@ export default class ToggleButton extends Phaser.GameObjects.Container {
     this.setIcons()
 
     if (this.event) {
-      console.log('this.event', this.event)
       this.emitter.emit(this.event, this.value)
     }
   }
