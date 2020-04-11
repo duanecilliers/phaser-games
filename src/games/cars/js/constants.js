@@ -1,3 +1,5 @@
 export const SET_SCORE = 'setScore'
 export const ADD_POINTS = 'addPoints'
 export const SCORE_UPDATED = 'scoreUpdated'
+export const PLAY_SOUND = 'playSound'
+export const MUSIC_CHANGED = 'musicChanged'

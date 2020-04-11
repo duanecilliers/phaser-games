@@ -4,6 +4,7 @@ import title from '../../../../placeholders/title.png'
 import button from '../../../../ui/button/img/2/1.png'
 import Align from '../../../../utils/Align'
 import FlatButton from '../../../../ui/button/FlatButton'
+import { MUSIC_CHANGED } from '../constants'
 
 export default class SceneOver extends Phaser.Scene {
   constructor () {
@@ -17,6 +18,7 @@ export default class SceneOver extends Phaser.Scene {
 
   create () {
     const emitter = new Phaser.Events.EventEmitter()
+
     this.grid = new Grid({
       scene: this,
       rows: 11,

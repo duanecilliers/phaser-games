@@ -1,19 +1,23 @@
 import Phaser from 'phaser'
 import Align from '../../../../utils/Align'
 import Collission from '../../../../utils/Collission'
-import { SCORE_UPDATED, ADD_POINTS, SET_SCORE } from '../constants'
+import { SCORE_UPDATED, ADD_POINTS, SET_SCORE, MUSIC_CHANGED } from '../constants'
 
 export default class Road extends Phaser.GameObjects.Container {
   /**
    * @param {Object} config
-   * @param config.scene {Phaser.Scene}
+   * @param config.scene {Phaser.Scene} Scene
+   * @param config.game {Phaser.Scene.game} game - @todo remove this, allready in scene?
+   * @param config.emitter {Phaser.Events.EventEmitter} Event Emitter
+   * @param config.model {Model}
    */
   constructor (config) {
-    const { scene, game, emitter } = config
+    const { scene, game, emitter, model } = config
     super(scene)
     this.scene = scene
     this.game = game
     this.emitter = emitter
+    this.model = model
 
     this.back = this.scene.add.image(0, 0, 'road')
     this.add(this.back)
@@ -61,6 +65,7 @@ export default class Road extends Phaser.GameObjects.Container {
     if (Collission.checkCollide(this.car, this.object)) {
       this.car.alpha = .5
       this.emitter.emit(SET_SCORE, 0)
+      this.emitter.emit(MUSIC_CHANGED)
       this.scene.scene.start('SceneOver')
     } else {
       this.car.alpha = 1
