@@ -29,7 +29,9 @@ export default class Road extends Phaser.GameObjects.Container {
     this.lineGroup = this.scene.add.group()
     this.count = 0
 
-    this.car = this.scene.add.sprite(this.displayWidth / 4, this.game.config.height * .9, 'cars')
+    this.carYPosition = this.game.config.height * .9
+
+    this.car = this.scene.add.sprite(this.displayWidth / 4, this.carYPosition, 'cars')
     Align.scaleToGameWidth(this.car, .1, this.game.config)
     this.add(this.car)
     this.back.setInteractive()
@@ -48,7 +50,7 @@ export default class Road extends Phaser.GameObjects.Container {
       { key: 'barrier', speed: 20, scale: 8 }
     ]
     const lane = Math.random() * 100
-    const index = Math.floor(Math.random() * 3)
+    const index = Math.floor(Math.random() * objects.length)
     this.object = this.scene.add.sprite(-this.displayWidth / 4, 0, objects[index].key)
     this.object.speed = objects[index].speed
     const scale = objects[index].scale / 100
@@ -118,10 +120,21 @@ export default class Road extends Phaser.GameObjects.Container {
 
   changeLanes () {
     this.emitter.emit(PLAY_SOUND, 'whooshSound')
-    if (this.car.x > 0) {
-      this.car.x =- this.displayWidth / 4
-    } else {
-      this.car.x = this.displayWidth / 4
-    }
+    const changeLaneTwean = this.scene.tweens.add({
+      targets: this.car,
+      duration: 100,
+      y: this.carYPosition,
+      x: this.car.x > 0 ? -(this.displayWidth / 4): (this.displayWidth / 4),
+      angle: this.car.x > 0 ? -30 : 30,
+      onComplete: this.straightenDrift.bind(this)
+    })
+  }
+
+  straightenDrift () {
+    this.scene.tweens.add({
+      targets: this.car,
+      duration: 50,
+      angle: 0
+    })
   }
 }
