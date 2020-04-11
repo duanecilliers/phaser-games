@@ -80,12 +80,9 @@ export default class Road extends Phaser.GameObjects.Container {
   moveObject () {
     this.object.y += this.vSpace / this.object.speed
     if (Collission.checkCollide(this.car, this.object)) {
-      this.car.alpha = .5
       if (!this.hasCollided) {
         this.handleCollission()
       }
-    } else {
-      this.car.alpha = 1
     }
 
     if (this.object.y > this.game.config.height) {
