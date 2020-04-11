@@ -35,6 +35,8 @@ export default class Road extends Phaser.GameObjects.Container {
     this.back.setInteractive()
     this.back.on('pointerdown', this.changeLanes.bind(this))
 
+    this.hasCollided = false
+
     this.addObjects()
   }
 
@@ -62,16 +64,24 @@ export default class Road extends Phaser.GameObjects.Container {
   handleGameOver () {
     this.emitter.emit(SET_SCORE, 0)
     this.emitter.emit(MUSIC_CHANGED)
+    this.hasCollided = false
     this.scene.scene.start('SceneOver')
+  }
+
+  handleCollission () {
+    this.hasCollided = true
+    this.emitter.emit(PLAY_SOUND, 'boomSound')
+    this.scene.tweens.add({ targets: this.car, duration: 1000, y: this.game.config.height, angle: -270 })
+    this.scene.time.addEvent({ delay: 1100, callback: this.handleGameOver, callbackScope: this, loop: false })
   }
 
   moveObject () {
     this.object.y += this.vSpace / this.object.speed
     if (Collission.checkCollide(this.car, this.object)) {
       this.car.alpha = .5
-      this.emitter.emit(PLAY_SOUND, 'boomSound', { volume: 0.3 })
-      this.scene.tweens.add({ targets: this.car, duration: 1000, y: this.game.config.height, angle: -270 })
-      this.scene.time.addEvent({ delay: 2000, callback: this.handleGameOver, callbackScope: this, loop: false })
+      if (!this.hasCollided) {
+        this.handleCollission()
+      }
     } else {
       this.car.alpha = 1
     }
