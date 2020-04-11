@@ -1,6 +1,5 @@
 import Phaser from 'phaser'
 import Grid from '../../../../utils/Grid'
-import title from '../../../../placeholders/title.png'
 import button from '../../../../ui/button/img/2/1.png'
 import Align from '../../../../utils/Align'
 import FlatButton from '../../../../ui/button/FlatButton'
@@ -11,7 +10,6 @@ export default class SceneTitle extends Phaser.Scene {
   }
 
   preload () {
-    this.load.image('title', title)
     this.load.image('button', button)
   }
 
@@ -23,8 +21,12 @@ export default class SceneTitle extends Phaser.Scene {
       cols: 11
     })
 
+    const { game: { config } } = this
+
+    this.add.image(config.width / 2, config.height / 2, 'titleBackground')
+
     const title = this.add.image(0, 0, 'title')
-    Align.scaleToGameWidth(title, .5, this.game.config)
+    Align.scaleToGameWidth(title, .5, config)
     this.grid.placeAtIndex(38, title)
 
     const startBtn = new FlatButton({

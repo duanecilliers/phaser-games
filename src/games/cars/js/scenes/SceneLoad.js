@@ -1,5 +1,7 @@
 import Phase from 'phaser'
 import ProgressBar from '../../../../ui/ProgressBar/ProgressBar'
+import titleBackground from '../../assets/images/titleBack.jpg'
+import title from '../../assets/images/title.png'
 import road from '../../assets/images/road.jpg'
 import carsSprite from '../../assets/images/cars.png'
 import line from '../../assets/images/line.png'
@@ -32,6 +34,8 @@ export default class SceneLoad extends Phaser.Scene {
     this.progressText.setOrigin(0.5, 0.5)
     this.load.on('progress', this.onProgress, this)
 
+    this.load.image('titleBackground', titleBackground)
+    this.load.image('title', title)
     this.load.image('road', road)
     this.load.spritesheet('cars', carsSprite, { frameWidth: 60, frameHeight: 126 })
     this.load.image('line', line)
