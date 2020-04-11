@@ -40,6 +40,9 @@ export default class Road extends Phaser.GameObjects.Container {
     this.hasCollided = false
 
     this.addObjects()
+
+    this.scene.input.keyboard.on('keydown_LEFT', this.changeLangeLeft.bind(this))
+    this.scene.input.keyboard.on('keydown_RIGHT', this.changeLangeRight.bind(this))
   }
 
   addObjects () {
@@ -125,6 +128,18 @@ export default class Road extends Phaser.GameObjects.Container {
       angle: this.car.x > 0 ? -30 : 30,
       onComplete: this.straightenDrift.bind(this)
     })
+  }
+
+  changeLangeLeft () {
+    if (this.car.x > 0) {
+      this.changeLanes()
+    }
+  }
+
+  changeLangeRight() {
+    if (this.car.x < 0) {
+      this.changeLanes()
+    }
   }
 
   straightenDrift () {
