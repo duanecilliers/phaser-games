@@ -3,6 +3,7 @@ import isMobile from '../../utils/isMobile'
 import SceneMain from './js/scenes/SceneMain'
 import SceneTitle from './js/scenes/SceneTitle';
 import SceneOver from './js/scenes/SceneOver';
+import SceneLoad from './js/scenes/SceneLoad';
 
 const div = document.createElement('div');
 div.id = 'main'
@@ -14,7 +15,7 @@ const config = {
   parent: 'main',
   width: isMobile() ? window.innerWidth : 480,
   height: isMobile() ? window.innerHeight : 640,
-  scene: [SceneTitle, SceneMain, SceneOver]
+  scene: [SceneLoad, SceneTitle, SceneMain, SceneOver]
 }
 
 export default () => new Phaser.Game(config)
